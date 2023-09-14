@@ -90,10 +90,6 @@ void MainWindow::gerer_donnees()
     int secondes = liste[1].mid(4, 2).toInt();
     int timestamp = (heures * 3600) + (minutes * 60) + secondes;
 
-    qDebug() << "timestamp : " << timestamp;
-    qDebug() << "Heures : " << heures;
-    qDebug() << "Minutes : " << minutes;
-    qDebug() << "Seconde : " << secondes;
     QString timestampQString = QString("%1").arg(timestamp);
     QString heuresQString = QString("%1").arg(heures);
     QString minutesQString = QString("%1").arg(minutes);
@@ -101,30 +97,25 @@ void MainWindow::gerer_donnees()
 
     ui->lineEdit_temps->setText(QString(timestampQString));
 
-    QString horaire = liste[1];
-    QString lat = liste[2];
-    QString N_or_S = liste[3];
-    QString lon = liste[4];
-    QString W_or_E = liste[5];
+
+
     QString postype = liste[6];
     QString nb_satellite = liste[7];
     QString precision_horizontale = liste[8];
-    QString altitude = liste[9];
     QString hauteur_geo = liste[11];
     QString tps_last_maj = liste[13];
     QString frequence_cardiaque = liste[14];
-    QString checksum = liste[15];
 
     // Latitude
 
     double latitude = 0.0;
     double degres_lat = liste[2].mid(0,2).toDouble();
     double minutes_lat = liste[2].mid(2,7).toDouble();
+    QString N_S = liste[3];
 
-
-    if( N_or_S == "S"){
+    if( N_S == "S"){
         latitude = (degres_lat + (minutes_lat / 60))*(-1);
-    }else if(N_or_S == "N"){
+    }else if(N_S == "N"){
         latitude = degres_lat + (minutes_lat / 60);
 
     }else{
@@ -133,14 +124,16 @@ void MainWindow::gerer_donnees()
     QString latitudestring = QString("%1").arg(latitude);
     ui->lineEdit_latitude->setText(latitudestring);
 
+
     // Longitude
     double longitude = 0.0;
     double degres_long = liste[4].mid(0,3).toDouble();
     double minutes_long = liste[4].mid(3,7).toDouble();
+    QString W_E = liste[5];
 
-    if( W_or_E == "W"){
+    if( W_E == "W"){
         longitude = (degres_long + (minutes_long / 60))*(-1);
-    }else if(W_or_E == "E"){
+    }else if(W_E == "E"){
         longitude = degres_long + (minutes_long / 60);
 
     }else{
@@ -148,6 +141,13 @@ void MainWindow::gerer_donnees()
     }
     QString longitude_string = QString("%1").arg(longitude);
     ui->lineEdit_longitude->setText(longitude_string);
+
+    //Altitude
+    float altitude = liste[9].toFloat();
+    QString altitudeQString = QString("%1").arg(altitude);
+    ui->lineEdit_altitude->setText(altitudeQString);
+
+
 }
 
 void MainWindow::mettre_a_jour_ihm()
