@@ -147,6 +147,10 @@ void MainWindow::gerer_donnees()
     QString altitudeQString = QString("%1").arg(altitude);
     ui->lineEdit_altitude->setText(altitudeQString);
 
+    // Frequence Cardiaque
+    int frequence = liste[14].toInt();
+    QString frequenceQString = QString("%1").arg(frequence);
+    ui->lineEdit_FC->setText(frequenceQString);
 
 }
 
