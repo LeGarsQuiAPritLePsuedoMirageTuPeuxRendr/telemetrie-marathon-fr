@@ -28,26 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // Lancement du timer avec un tick toutes les 1000 ms
     pTimer->start(1000);
 
-    //carte
-    QString carte = ":/carte_la_rochelle_plan.png";
-    pCarte = new QImage();
-    pCarte->load(carte);
-    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
-    bool Click = false;
-    ui->pushButtonCarte->clicked(Click = true);
-    if (Click){
-        carte = "carte_la_rochelle_satellite.png";
-    }
 
-    //Dessiner
-    QPainter p(pCarte);
-    // Choix de la couleur
-    p.setPen(Qt::red);
-    // Dessin d'une ligne
-    p.drawLine(10, 20, 250, 300);
-    // Fin du dessin et application sur l'image
-    p.end();
-    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
+
+
+
 
 
 }
@@ -193,10 +177,13 @@ void MainWindow::gerer_donnees()
     ui->lineEdit_FCMax->setText(FCmaxQString);
     qDebug() <<FCmax;
 
+
+
     //progression bar
     float IntFreq = (frequence/FCmax)*100;
     ui->progressBar->setValue((IntFreq));
     qDebug() << IntFreq;
+
 }
 
 void MainWindow::mettre_a_jour_ihm()
@@ -230,5 +217,29 @@ void MainWindow::afficher_erreur(QAbstractSocket::SocketError socketError)
                                  tr("Erreur : %1.")
                                      .arg(tcpSocket->errorString()));
     }
+}
+
+
+
+void MainWindow::on_pushButtonCarte_clicked()
+{
+
+    Click = !Click;
+
+
+    QString carte;
+    if (Click == false) {
+        carte = ":/carte_la_rochelle_plan.png";
+        ui->pushButtonCarte->setIcon(QIcon(":/carte_la_rochelle_satellite.png")); // Icône du bouton
+        qDebug()<<Click;
+
+    } else {
+        carte = ":/carte_la_rochelle_satellite.png";
+        ui->pushButtonCarte->setIcon(QIcon(":/carte_la_rochelle_plan.png")); // Icône du bouton
+    }
+
+    pCarte->load(carte);
+
+    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
 }
 

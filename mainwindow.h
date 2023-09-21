@@ -37,11 +37,15 @@ private slots:
 
     void on_lineEdit_reponse_cursorPositionChanged(int arg1, int arg2);
 
+    void on_pushButtonCarte_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTcpSocket *tcpSocket;
     QTimer *pTimer;
     QImage *pCarte;
+    bool Click;
+
 };
 
 #endif // MAINWINDOW_H
