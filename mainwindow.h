@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QtNetwork>
 #include <QMessageBox>
+#include <QPainter>
+
+
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +41,7 @@ private:
     Ui::MainWindow *ui;
     QTcpSocket *tcpSocket;
     QTimer *pTimer;
+    QImage *pCarte;
 };
 
 #endif // MAINWINDOW_H

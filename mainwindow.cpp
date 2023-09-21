@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QTimer>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -26,6 +27,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Lancement du timer avec un tick toutes les 1000 ms
     pTimer->start(1000);
+
+    //carte
+    QString carte = ":/carte_la_rochelle_plan.png";
+    pCarte = new QImage();
+    pCarte->load(carte);
+    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
+    bool Click = false;
+    ui->pushButtonCarte->clicked(Click = true);
+    if (Click){
+        carte = "carte_la_rochelle_satellite.png";
+    }
+
+    //Dessiner
+    QPainter p(pCarte);
+    // Choix de la couleur
+    p.setPen(Qt::red);
+    // Dessin d'une ligne
+    p.drawLine(10, 20, 250, 300);
+    // Fin du dessin et application sur l'image
+    p.end();
+    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -42,6 +66,9 @@ MainWindow::~MainWindow()
 
     // Destruction du timer
     delete pTimer;
+
+    //Destruction Carte
+    delete pCarte;
 }
 
 void MainWindow::on_connexionButton_clicked()
@@ -104,7 +131,7 @@ void MainWindow::gerer_donnees()
     QString precision_horizontale = liste[8];
     QString hauteur_geo = liste[11];
     QString tps_last_maj = liste[13];
-    QString frequence_cardiaque = liste[14];
+
 
     // Latitude
 
@@ -148,10 +175,28 @@ void MainWindow::gerer_donnees()
     ui->lineEdit_altitude->setText(altitudeQString);
 
     // Frequence Cardiaque
-    int frequence = liste[14].toInt();
+    int frequence = liste[14].mid(1,3).toInt();
     QString frequenceQString = QString("%1").arg(frequence);
     ui->lineEdit_FC->setText(frequenceQString);
+    qDebug() <<frequence;
 
+    //Carte
+    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
+
+    //FCmax
+    QString ageRentre = ui->lineEdit_Age->text();
+    bool ok;
+    int age = ageRentre.toInt(&ok);
+
+    int FCmax= 207 - (0.7*age);
+    QString FCmaxQString =QString("%1").arg(FCmax);
+    ui->lineEdit_FCMax->setText(FCmaxQString);
+    qDebug() <<FCmax;
+
+    //progression bar
+    float IntFreq = (frequence/FCmax)*100;
+    ui->progressBar->setValue((IntFreq));
+    qDebug() << IntFreq;
 }
 
 void MainWindow::mettre_a_jour_ihm()
