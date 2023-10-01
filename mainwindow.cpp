@@ -28,11 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // Lancement du timer avec un tick toutes les 1000 ms
     pTimer->start(1000);
 
-
-
-
-
-
+    QString cartebase = ":/carte_la_rochelle_plan.png";
+    pCarte->load(cartebase);
+    ui->pushButtonCarte->setIcon(QIcon(":/carte_la_rochelle_satellite.png")); // Icône du bouton
+    ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte)); // Carte Plan
 
 }
 
@@ -178,11 +177,18 @@ void MainWindow::gerer_donnees()
     qDebug() <<FCmax;
 
 
-
     //progression bar
     float IntFreq = (frequence/FCmax)*100;
     ui->progressBar->setValue((IntFreq));
     qDebug() << IntFreq;
+
+    //dessin
+    //QPainter painter(pCarte);
+    //QPen pen(Qt::red, 2);  // Définit la couleur de la ligne en rouge et l'épaisseur en 2
+    //painter.setPen(pen);
+    //painter.drawLine(10, 10, 100, 100);  // Dessine une ligne du point (10,10) au point (100,100)
+
+    //ui->label_carte->setPixmap(QPixmap::fromImage(*pCarte));
 
 }
 
@@ -225,9 +231,8 @@ void MainWindow::on_pushButtonCarte_clicked()
 {
 
     Click = !Click;
-
-
     QString carte;
+
     if (Click == false) {
         carte = ":/carte_la_rochelle_plan.png";
         ui->pushButtonCarte->setIcon(QIcon(":/carte_la_rochelle_satellite.png")); // Icône du bouton
