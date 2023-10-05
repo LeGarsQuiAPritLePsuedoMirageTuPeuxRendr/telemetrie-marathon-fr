@@ -4,7 +4,15 @@
 #include <QMainWindow>
 #include <QtNetwork>
 #include <QMessageBox>
+#include <QTimer>
+#include <QDebug>
+#include <QImage>
+#include <QLabel>
+#include <QPixmap>
 #include <QPainter>
+#include <bitset>
+#include <QLayout>
+#include <QSqlDatabase>
 
 
 
@@ -33,8 +41,6 @@ private slots:
 
     void mettre_a_jour_ihm();
 
-    void on_lineEdit_ip_2_cursorPositionChanged(int arg1, int arg2);
-
     void on_lineEdit_reponse_cursorPositionChanged(int arg1, int arg2);
 
     void on_pushButtonCarte_clicked();
@@ -44,8 +50,21 @@ private:
     QTcpSocket *tcpSocket;
     QTimer *pTimer;
     QImage *pCarte;
-    bool Click;
+    QImage *pCarteTrs;
+    QImage *pVide;
 
+
+    bool Click = false;
+    double calcul_px;
+    double calcul_py;
+    double dernierpx;
+    double dernierpy;
+    QSqlDatabase bdd;
+    float AB=0,ABr,ABtt;
+    float latA,latB,lonA,lonB;
+    float calories;
+    float vitesse;
+    double compteur;
 };
 
 #endif // MAINWINDOW_H

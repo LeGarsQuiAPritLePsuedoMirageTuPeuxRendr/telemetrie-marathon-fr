@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>carte_la_rochelle_plan.png</file>
         <file>carte_la_rochelle_satellite.png</file>
+        <file>trs.png</file>
+        <file>marathon.sqlite</file>
+        <file>photo_vide.png</file>
     </qresource>
 </RCC>
